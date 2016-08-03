@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+        id="cocoon-plugin-social-android-googleplaygames2" version="1.1.3">
+    <name>CocoonGooglePlayGames2</name>
+    <description>Android Google Play Games API</description>
+    <license>MPL 2.0</license>
+    <platform name="android">
+        <source-file src="src/android/GPGService2.java" target-dir="src/com/ludei/googleplaygames" />
+        <source-file src="src/android/GPUtils2.java" target-dir="src/com/ludei/googleplaygames" />
+        <source-file src="src/android/GPGPlugin2.java" target-dir="src/com/ludei/googleplaygames/cordova" />
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LDGooglePlayGamesPlugin2" >
+                <param name="android-package" value="com.ludei.googleplaygames.cordova.GPGPlugin2"/>
+            </feature>
+        </config-file>
+    </platform>
+</plugin>
