@@ -39,7 +39,7 @@ import com.google.android.gms.games.snapshot.SnapshotContents;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
-import com.google.android.gms.games.stats.PlayerStats
+import com.google.android.gms.games.stats.PlayerStats;
 import com.google.android.gms.games.stats.Stats;
 import org.json.JSONObject;
 import java.io.BufferedOutputStream;
