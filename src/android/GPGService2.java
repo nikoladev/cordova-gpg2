@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -38,6 +39,8 @@ import com.google.android.gms.games.snapshot.SnapshotContents;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
+import com.google.android.gms.games.stats.PlayerStats
+import com.google.android.gms.games.stats.Stats;
 import org.json.JSONObject;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -1247,6 +1250,36 @@ public class GPGService2 implements GoogleApiClient.ConnectionCallbacks, GoogleA
         Games.Events.increment(client, eventId, increment);
     }
 
+    // public Stats.LoadPlayerStatsResult loadPlayerStats(String eventId, int increment) {
+    public void loadPlayerStats() {
+        PendingResult<Stats.LoadPlayerStatsResult> result =
+                Games.Stats.loadPlayerStats(
+                mGoogleApiClient, false /* forceReload */);
+        result.setResultCallback(new
+                ResultCallback<Stats.LoadPlayerStatsResult>() {
+            public void onResult(Stats.LoadPlayerStatsResult result) {
+                Status status = result.getStatus();
+                if (status.isSuccess()) {
+                    PlayerStats stats = result.getPlayerStats();
+                    if (stats != null) {
+                        Log.d("TAG", "Player stats loaded");
+                        if (stats.getDaysSinceLastPlayed() > 7) {
+                            Log.d("TAG", "It's been longer than a week");
+                        }
+                        if (stats.getNumberOfSessions() > 1000) {
+                            Log.d("TAG", "Veteran player");
+                        }
+                        if (stats.getChurnProbability() == 1) {
+                            Log.d("TAG", "Player is at high risk of churn");
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "Failed to fetch Stats Data status: "
+                            + status.getStatusMessage());
+                }
+            }
+        });
+    }
 
     private void notifyWillStart()
     {

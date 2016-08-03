@@ -345,6 +345,12 @@ public class GPGPlugin2 extends CordovaPlugin implements GPGService2.SessionCall
         ctx.success();
     }
 
+    @SuppressWarnings("unused")
+    public void loadPlayerStats(CordovaArgs args, final CallbackContext ctx) throws JSONException {
+
+       _service.loadPlayerStats(eventId, increment);
+        ctx.success();
+    }
 
     //Session Listener
     @Override
