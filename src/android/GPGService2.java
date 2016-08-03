@@ -1254,7 +1254,7 @@ public class GPGService2 implements GoogleApiClient.ConnectionCallbacks, GoogleA
     public void loadPlayerStats() {
         PendingResult<Stats.LoadPlayerStatsResult> result =
                 Games.Stats.loadPlayerStats(
-                mGoogleApiClient, false /* forceReload */);
+                client, false /* forceReload */);
         result.setResultCallback(new
                 ResultCallback<Stats.LoadPlayerStatsResult>() {
             public void onResult(Stats.LoadPlayerStatsResult result) {
