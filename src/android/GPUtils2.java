@@ -1,4 +1,4 @@
-package com.ludei.googleplaygames;
+package com.lk.googleplaygames;
 
 
 import android.app.Activity;

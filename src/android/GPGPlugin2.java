@@ -1,10 +1,10 @@
-package com.ludei.googleplaygames.cordova;
+package com.lk.googleplaygames.cordova;
 
 import android.util.Log;
 import android.Manifest;
 import android.content.Intent;
 
-import com.ludei.googleplaygames.GPGService2;
+import com.lk.googleplaygames.GPGService2;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;

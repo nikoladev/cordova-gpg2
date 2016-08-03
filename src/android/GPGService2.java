@@ -1,4 +1,4 @@
-package com.ludei.googleplaygames;
+package com.lk.googleplaygames;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -245,7 +245,7 @@ public class GPGService2 implements GoogleApiClient.ConnectionCallbacks, GoogleA
 
     private static GPGService2 sharedInstance = null;
 
-    //static values used to communicate with Ludei's Google Play Multiplayer Service
+    //static values used to communicate with lk's Google Play Multiplayer Service
     public static Runnable onConnectedCallback;
     public static Invitation multiplayerInvitation;
     public static GoogleApiClient getGoogleAPIClient() {
