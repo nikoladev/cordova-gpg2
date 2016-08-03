@@ -91,7 +91,7 @@ public class GPGPlugin2 extends CordovaPlugin implements GPGService2.SessionCall
 
     @SuppressWarnings("unused")
     public void login(CordovaArgs args, final CallbackContext ctx) throws JSONException {
-        Log.d("========Using GPG2 login=========");
+        Log.d("TAG", "========Using GPG2 login=========");
         JSONObject obj = args.optJSONObject(0);
         String[] scopes = null;
         if (obj != null) {
