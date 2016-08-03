@@ -1,6 +1,6 @@
 package com.ludei.googleplaygames.cordova;
 
-import android.util;
+import android.util.Log;
 import android.Manifest;
 import android.content.Intent;
 
