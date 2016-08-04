@@ -1252,7 +1252,7 @@ public class GPGService2 implements GoogleApiClient.ConnectionCallbacks, GoogleA
         Games.Events.increment(client, eventId, increment);
     }
 
-    public void loadPlayerStats(RequestCallback callback) {
+    public void loadPlayerStats(final RequestCallback callback) {
         PendingResult<Stats.LoadPlayerStatsResult> result =
                 Games.Stats.loadPlayerStats(
                 client, false /* forceReload */);

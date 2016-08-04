@@ -350,7 +350,7 @@ public class GPGPlugin2 extends CordovaPlugin implements GPGService2.SessionCall
 
         _service.loadPlayerStats(new GPGService2.RequestCallback() {
             @Override
-            public void onComplete(JSONObject responseJSON, Error error) {
+            public void onComplete(JSONObject responseJSON, GPGService2.Error error) {
                 if (responseJSON != null) {
                     ctx.sendPluginResult(new PluginResult(PluginResult.Status.OK, responseJSON));
                 } else if (error != null) {
