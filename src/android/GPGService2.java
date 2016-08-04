@@ -42,6 +42,7 @@ import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
 import com.google.android.gms.games.stats.PlayerStats;
 import com.google.android.gms.games.stats.Stats;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -1251,32 +1252,38 @@ public class GPGService2 implements GoogleApiClient.ConnectionCallbacks, GoogleA
         Games.Events.increment(client, eventId, increment);
     }
 
-    // public Stats.LoadPlayerStatsResult loadPlayerStats(String eventId, int increment) {
-    public void loadPlayerStats() {
+    public void loadPlayerStats(RequestCallback callback) {
         PendingResult<Stats.LoadPlayerStatsResult> result =
                 Games.Stats.loadPlayerStats(
                 client, false /* forceReload */);
-        result.setResultCallback(new
-                ResultCallback<Stats.LoadPlayerStatsResult>() {
+        result.setResultCallback(new ResultCallback<Stats.LoadPlayerStatsResult>() {
             public void onResult(Stats.LoadPlayerStatsResult result) {
                 Status status = result.getStatus();
                 if (status.isSuccess()) {
                     PlayerStats stats = result.getPlayerStats();
+                    JSONObject data = new JSONObject();
                     if (stats != null) {
-                        Log.d("TAG", "Player stats loaded");
-                        if (stats.getDaysSinceLastPlayed() > 7) {
-                            Log.d("TAG", "It's been longer than a week");
+                        try {
+                            data.put("averageSessionLength", stats.getAverageSessionLength());
+                            data.put("churnProbability", stats.getChurnProbability());
+                            data.put("daysSinceLastPlayed", stats.getDaysSinceLastPlayed());
+                            data.put("highSpenderProbability", stats.getHighSpenderProbability());
+                            data.put("numberOfPurchases", stats.getNumberOfPurchases());
+                            data.put("numberOfSessions", stats.getNumberOfSessions());
+                            data.put("sessionPercentile", stats.getSessionPercentile());
+                            data.put("spendPercentile", stats.getSpendPercentile());
+                            data.put("spendProbability", stats.getSpendProbability());
+                            data.put("totalSpendNext28Days", stats.getTotalSpendNext28Days());
                         }
-                        if (stats.getNumberOfSessions() > 1000) {
-                            Log.d("TAG", "Veteran player");
+                        catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        if (stats.getChurnProbability() == 1) {
-                            Log.d("TAG", "Player is at high risk of churn");
-                        }
+                        callback.onComplete(data, new Error("Player stats fetched successfully",  GamesStatusCodes.STATUS_OK));
+                    } else {
+                        callback.onComplete(null, new Error("getPlayerStats returned 'null'",  GamesStatusCodes.STATUS_INTERNAL_ERROR));
                     }
                 } else {
-                    Log.d("TAG", "Failed to fetch Stats Data status: "
-                            + status.getStatusMessage());
+                    callback.onComplete(null, new Error("status.isSuccess did not return 'true'",  GamesStatusCodes.STATUS_NETWORK_ERROR_NO_DATA));
                 }
             }
         });
